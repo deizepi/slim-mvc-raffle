@@ -19,7 +19,7 @@ This is a simple web application skeleton project that uses the [Slim4 Framework
 composer install
 ```
 2. Configure database
-3. Run migrations
+3. Run migrations (rename `.env.example` to `.env` and fill variables with correct values)
 ```bash
 vendor/bin/phinx migrate
 ```
