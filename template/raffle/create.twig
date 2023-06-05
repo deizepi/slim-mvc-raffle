@@ -1,0 +1,31 @@
+{% extends 'layout.twig' %}
+
+{% block contents %}
+
+<div class="card">
+  <div class="card-header">
+    Criar Nova Rifa
+  </div>
+  <div class="card-body">
+    <form action="{{ url_for('raffle') }}" method="post">
+        <div class="form-group">
+            <label for="raffleName">Nome da Rifa</label>
+            <input type="text" name="name" class="form-control" id="raffleName" aria-describedby="raffleNameHelp" placeholder="ex: Rifa Cesta de Chocolate" value="{{ flash.getFirstMessage('name') ?: '' }}">
+            <small id="raffleNameHelp" class="form-text text-muted">Coloque algumas informações da rifa como o prêmio, valor, etc.</small>
+        </div>
+        <div class="form-group">
+            <label for="raffleSlug">Link da Rifa</label>
+            <input type="text" name="slug" class="form-control" id="raffleSlug" aria-describedby="raffleSlugHelp" placeholder="ex: rifa-chocolate" value="{{ flash.getFirstMessage('slug') ?: '' }}">
+            <small id="raffleSlugHelp" class="form-text text-muted">Link para que outras pessoas possam acessar a rifa (não deve se repetir).</small>
+        </div>
+        <div class="form-group">
+            <label for="raffleQuantity">Quantidade de Números</label>
+            <input type="text" name="quantity" class="form-control" id="raffleQuantity" aria-describedby="raffleQuantityHelp" placeholder="ex: 100" value="{{ flash.getFirstMessage('quantity') ?: '' }}">
+            <small id="raffleQuantityHelp" class="form-text text-muted">Quantos números estarão disponível para venda (para vender 100 números, basta colocar "100").</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
