@@ -106,6 +106,9 @@
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip()
     $(":input").inputmask();
+    if ($(".alert-dismissible")) {
+        setTimeout(() => { $(".alert-dismissible").remove() }, 5000)
+    }
 });
 </script>
 {% block scripts %}{% endblock %}

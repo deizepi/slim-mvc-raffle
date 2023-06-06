@@ -13,6 +13,7 @@ final class AuthController extends BaseController
     private function auth(string $email, string $pswd)
     {
         $uinfo = User::where("email", "=", $email)
+            ->where("active", "=", 1)
             ->first();
         if ($uinfo == null) return null;
         if (!password_verify($pswd, $uinfo->password)) return null;

@@ -2,12 +2,12 @@
 
 {% block contents %}
     {% if raffle %}
-        <h1>
+        <h1 class="mb-3">
             {{ raffle.name }} <small>({{ raffle.formatted_value }})</small>
         </h1>
-        <div class="row align-items-center">
+        <div class="row align-items-center mb-5">
             {% for index, item in raffle.numbers %}
-                <div class="col-auto {{ item.buyer ? 'bg-danger text-white' }}">
+                <div class="col-auto {{ uinfo ? 'raffle-item' : '' }} {{ item.buyer ? 'bg-danger text-white' }}">
                     <div class="dropdown">
                         <div id="dropdownMenu{{ number }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ item.number }}
