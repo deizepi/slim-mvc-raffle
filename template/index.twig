@@ -3,7 +3,7 @@
 {% block contents %}
     {% if raffle %}
         <h1>
-            {{ raffle.name }}
+            {{ raffle.name }} <small>({{ raffle.formatted_value }})</small>
         </h1>
         <div class="row align-items-center">
             {% for index, item in raffle.numbers %}
@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="buyerPhone">Número de Telefone</label>
-                                            <input type="text" name="phone" class="form-control" id="buyerPhone" aria-describedby="buyerPhoneHelp" placeholder="ex: (11) 90000-0000" value="{{ flash.getFirstMessage('phone') ?: '' }}" data-inputmask="'mask': '(99) 99999-9999'">
+                                            <input type="text" name="phone" class="form-control" id="buyerPhone" aria-describedby="buyerPhoneHelp" placeholder="ex: (11) 90000-0000" value="{{ flash.getFirstMessage('phone') ?: '' }}" data-inputmask="'mask': '(99) 9999[9]-9999'">
                                         </div>
                                         <div class="form-group">
                                             <label for="buyerNotes">Observações</label>

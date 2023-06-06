@@ -90,6 +90,7 @@ final class HomeController extends BaseController
         if ($raffle) {
             $buyers = $raffle->buyers()->with(["buyer"])->get()->toArray();
             $raffle = $raffle->toArray();
+            $raffle["formatted_value"] = "R$ " . number_format($raffle["value"], 2, ",", ".");
             $raffle["numbers"] = [];
             for($i = 1; $i <= $raffle["quantity"]; $i++) {
                 $key = array_search($i, array_column($buyers, 'number'));

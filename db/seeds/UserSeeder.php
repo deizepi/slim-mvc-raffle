@@ -15,13 +15,12 @@ class UserSeeder extends AbstractSeed
      */
     public function run(): void
     {
-        // password: P3dro<3
         $rows = [
             [
                 'id' => 1,
-                'name'  => 'David Deizepi Rocha',
-                'email' => 'david_deizepi@hotmail.com',
-                'password' => '$2y$10$wv/C/od7eGV6cOgpSVh7TO1KjRwgLfNcROZ1rtXOz1fTR3rU88iLC'
+                'name'  => $_ENV["USER_NAME"],
+                'email' => $_ENV["USER_EMAIL"],
+                'password' => password_hash($_ENV["USER_PASSWORD"], PASSWORD_DEFAULT)
             ]
         ];
 

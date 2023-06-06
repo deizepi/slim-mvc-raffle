@@ -21,6 +21,10 @@ final class RaffleController extends BaseController
                 if (!v::slug()->validate($data["slug"]))
                     throw new \Exception('O link da rifa não é válido.');
     
+                $data["value"] = (float) str_replace(",", ".", preg_replace("/[^0-9\,]/", "", $data["value"]));
+                if (!v::floatVal()->min(0.01)->validate($data["value"]))
+                    throw new \Exception('O valor da rifa não é válido');
+    
                 if (!v::intVal()->between(100, 10000)->validate($data["quantity"]))
                     throw new \Exception('A quantidade não pode ser menor que 100 ou maior que 10.0000');
 
@@ -34,7 +38,7 @@ final class RaffleController extends BaseController
                 $this->flash->addMessage('slug', $data['slug']);
                 $this->flash->addMessage('quantity', $data['quantity']);
                 $this->flash->addMessage('error', $error->getMessage());
-                return $response->withStatus(302)->withHeader('Location', '/raffle');
+                return $response->withStatus(302)->withHeader('Location', '/member/raffle');
             }
         }
         return $this->render($request, $response, '/raffle/create.twig');

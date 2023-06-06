@@ -15,7 +15,7 @@ return
     'environments' => [
         'default_migration_table' => 'phinxlog',
         'default_environment' => $_ENV["APP_ENV"],
-        'production' => [
+        $_ENV["APP_ENV"] => [
             'adapter' => $_ENV['DB_DRIVER'],
             'host' => $_ENV['DB_HOST'],
             'name' => $_ENV['DB_SCHEMA'],

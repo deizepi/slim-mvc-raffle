@@ -25,6 +25,12 @@ final class RaffleMigration extends AbstractMigration
             ->addColumn('slug', 'string', [
                 'null' => false
             ])
+            ->addColumn('value', 'decimal', [
+                'default' => null,
+                'null' => false,
+                'precision'=> 10,
+                'scale'=> 2
+            ])
             ->addColumn('quantity', 'integer', [
                 'null' => false,
                 'default' => 100
