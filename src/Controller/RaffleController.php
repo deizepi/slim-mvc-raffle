@@ -41,6 +41,8 @@ final class RaffleController extends BaseController
                 return $response->withStatus(302)->withHeader('Location', '/member/raffle');
             }
         }
-        return $this->render($request, $response, '/raffle/create.twig');
+        return $this->render($request, $response, '/raffle/create.twig', [
+            "pageTitle" => "Nova Rifa"
+        ]);
     }
 }

@@ -105,7 +105,8 @@ final class HomeController extends BaseController
 
         return $this->render($request, $response, 'index.twig', [ 
             'raffles' => $raffles->toArray(),
-            'raffle' => $raffle
+            'raffle' => $raffle,
+            'pageTitle' => $raffle["name"]
         ]);
     }
 }
