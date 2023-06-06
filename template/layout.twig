@@ -102,6 +102,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" 
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" 
+        crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip()
@@ -109,6 +112,23 @@ $(document).ready(function(){
     if ($(".alert-dismissible")) {
         setTimeout(() => { $(".alert-dismissible").remove() }, 5000)
     }
+    const copy = $("#copy")
+    copy.click(() => {
+        if (copy.text().trim() == "Copiar Imagem") {
+            copy.html('Copiando...')
+            html2canvas(document.getElementById("raffle")).then(function(canvas) {
+                canvas.toBlob(blob => {
+                    navigator.clipboard.write([
+                        new ClipboardItem({'image/png': blob})
+                    ])
+                    copy.html('Copiado!')
+                    setTimeout(() => {
+                        copy.html('Copiar Imagem')
+                    }, 5000)
+                })
+            });
+        }
+    })
 });
 </script>
 {% block scripts %}{% endblock %}
