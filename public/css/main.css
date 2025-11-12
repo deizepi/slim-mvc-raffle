@@ -28,7 +28,8 @@ body {
     margin-bottom: 4px;
 }
 .raffle-item.item-lock {
-    background-color: #00C853;
+    background-color: #000000;
+    color: #CCCCCC;
     text-decoration: line-through;
 }
 .raffle-item:hover {
