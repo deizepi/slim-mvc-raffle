@@ -1,8 +1,34 @@
 body {
     font-family: 'Roboto Mono', monospace;
 }
+#raffle {
+    background-image: url(../css/bg.jpg);
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 900px;
+    height: 1600px;
+    padding-top: 620px !important;
+    padding-left: 40px !important;
+    padding-left: 40px !important;
+}
+#raffle h1 {
+    display: none;
+}
 .raffle-item {
     cursor: pointer;
+    font-size: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 11px 4px;
+    text-align: center;
+    background-color: #FF00AA;
+    color: #FFFFFF;
+    border-radius: 50%;
+    margin-bottom: 4px;
+}
+.raffle-item.item-lock {
+    background-color: #00C853;
 }
 .raffle-item:hover {
     text-decoration: underline;
