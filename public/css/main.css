@@ -29,6 +29,7 @@ body {
 }
 .raffle-item.item-lock {
     background-color: #00C853;
+    text-decoration: line-through;
 }
 .raffle-item:hover {
     text-decoration: underline;
