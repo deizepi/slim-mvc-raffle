@@ -20,7 +20,8 @@ return function (App $app) {
 
     $app->add(new \RKA\Middleware\ProxyDetection());
 
-    if ($settings['debug'] == true) {
-        $app->add(new RunTracy\Middlewares\TracyMiddleware($app));
-    }
+    // if ($settings['debug'] == true) {
+    //     $app->add(SlimTracy\Middlewares\TracyMiddleware($app, $tracySettings));
+    //     $app->add(new RunTracy\Middlewares\TracyMiddleware($app));
+    // }
 };

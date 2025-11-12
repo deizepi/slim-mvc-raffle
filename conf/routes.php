@@ -8,9 +8,9 @@ return function (App $app) {
     $container = $app->getContainer();
     $settings = $container->get('settings');
 
-    if ($settings['debug'] == true && $settings['tracy']['enableConsoleRoute'] == true) {
-        $app->post('/console', 'RunTracy\Controllers\RunTracyConsole:index');
-    }
+    // if ($settings['debug'] == true && $settings['tracy']['enableConsoleRoute'] == true) {
+    //     $app->post('/console', 'RunTracy\Controllers\RunTracyConsole:index');
+    // }
 
     $app->map(['GET', 'POST'], '/[{slug}]', 'App\Controller\HomeController:index')->setName('home');
 

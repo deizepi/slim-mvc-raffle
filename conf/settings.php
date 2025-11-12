@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use Monolog\Logger;
-use Tracy\Debugger;
+// use Tracy\Debugger;
 
 return function (ContainerBuilder $containerBuilder) {
     $rootPath = realpath(__DIR__ . '/..');
@@ -109,6 +109,6 @@ return function (ContainerBuilder $containerBuilder) {
     if ($debug == false) {
         $containerBuilder->enableCompilation($rootPath . '/var/cache');
     } else {
-        Debugger::enable(Debugger::DEVELOPMENT, $rootPath . '/var/log');
+        // Debugger::enable(Debugger::DEVELOPMENT, $rootPath . '/var/log');
     }
 };

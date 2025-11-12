@@ -17,6 +17,7 @@ final class HomeController extends BaseController
         if ($request->getMethod() == 'POST') {
             $data = $request->getParsedBody();
             try {
+                $update = $data['is_edit'];
                 if (!v::intVal()->validate($data["raffle_id"]))
                     throw new \Exception('Não encontramos nenhuma rifa com os dados fornecidos.');
 
@@ -31,15 +32,28 @@ final class HomeController extends BaseController
                 if (!v::each(v::max($raffle->quantity))->validate($numbers))
                     throw new \Exception('Um dos números fornecidos para compra é maior que os números disponíveis na rifa.');
 
+                if ($data['excluir']) {
+                    $buyerRaffle = BuyerRaffle::where("number", "=", $numbers[0])
+                        ->where("raffle_id", "=", $raffle->id)
+                        ->first();
+                    if (!$buyerRaffle)
+                        throw new \Exception("Não identificamos a compra para excluir");
+
+                    $buyerRaffle->delete();
+
+                    $this->flash->addMessage('info', 'Compra excluída com sucesso');
+                    return $response->withStatus(302)->withHeader('Location', '/' . $raffle->slug);
+                }
+
                 foreach($numbers as $number) {
                     $alreadyBuyed = BuyerRaffle::where("number", "=", $number)
                         ->where("raffle_id", "=", $raffle->id)
                         ->first();
-                    if ($alreadyBuyed)
+                    if ($alreadyBuyed && !$update)
                         throw new \Exception("O número {$number} já foi comprado por outro comprador");
                 }
 
-                if (!v::alpha(' ')->validate($data["name"]))
+                if (!v::stringType()->notEmpty()->length(3, 100)->validate($data["name"]))
                     throw new \Exception('O nome do comprador não é válido.');
     
                 if (!v::regex('/\([0-9]{2}\)\ [0-9]{4,5}\-[0-9]{4}/')->validate($data['phone']))
@@ -64,12 +78,20 @@ final class HomeController extends BaseController
 
                 foreach ($numbers as $number) {
                     $data['number'] = $number;
-                    $buyerRaffle = new BuyerRaffle($data);
+                    if ($update) {
+                        $buyerRaffle = BuyerRaffle::where("number", "=", $number)
+                            ->where("raffle_id", "=", $raffle->id)
+                            ->first();
+                        $buyerRaffle->buyer_id = $data['buyer_id'];
+                    } else {
+                        $buyerRaffle = new BuyerRaffle($data);
+                    }
                     $buyerRaffle->save();
                 }
     
-                $this->flash->addMessage('info', 'Compra registrada com sucesso');
-                return $response->withStatus(302)->withHeader('Location', '/');
+                $action = $update ? "alterada" : "registrada";
+                $this->flash->addMessage('info', 'Compra ' . $action . ' com sucesso');
+                return $response->withStatus(302)->withHeader('Location', '/' . $raffle->slug);
             } catch(\Exception $error) {
                 $this->flash->addMessage('raffle_id', $data['raffle_id']);
                 $this->flash->addMessage('number', $data['number']);
@@ -77,7 +99,7 @@ final class HomeController extends BaseController
                 $this->flash->addMessage('phone', $data['phone']);
                 $this->flash->addMessage('notes', $data['notes']);
                 $this->flash->addMessage('error', $error->getMessage());
-                return $response->withStatus(302)->withHeader('Location', '/');
+                return $response->withStatus(302)->withHeader('Location', '/' . $raffle->slug);
             }
         }
 

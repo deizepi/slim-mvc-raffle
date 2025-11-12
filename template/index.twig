@@ -14,46 +14,42 @@
                                 {{ item.number }}
                             </div>
                             {%if uinfo %}
-                                {% if item.buyer %}
-                                    <div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenu{{ number }}" style="min-width: 360px;">
-                                        <h5 class="card-header">Número {{ item.number }}</h5>
-                                        <div class="card-body">
-                                            <dl class="row mb-0">
-                                                <dt class="col-sm-4">Nome</dt>
-                                                <dd class="col-sm-8">{{ item.buyer.name }}</dd>
-                                                <dt class="col-sm-4">Telefone</dt>
-                                                <dd class="col-sm-8">{{ item.buyer.phone|phone }}</dd>
-                                                <dt class="col-sm-4">Obs:.</dt>
-                                                <dd class="col-sm-8">{{ item.buyer.notes|default("Não informado") }}</dd>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="dropdown-menu dropdown-menu-right {{ flash.getFirstMessage('number')|split(";", 2)|first == item.number ? 'show' }}" aria-labelledby="dropdownMenu{{ number }}" style="min-width: 360px;">
-                                        <form action="{{ url_for('home') }}" method="post" class="px-4 py-3">
-                                            <input type="hidden" name="raffle_id" value="{{raffle.id}}" />
-                                            <div class="form-group">
-                                                <label for="raffleNumber">Número(s) Comprado(s)</label>
-                                                <input type="text" name="number" class="form-control" id="raffleNumber" aria-describedby="raffleNumberHelp" placeholder="ex: 1;54;59" value="{{ flash.getFirstMessage('number') ?: item.number }}">
+                                <div class="dropdown-menu dropdown-menu-right {{ flash.getFirstMessage('number')|split(";", 2)|first == item.number ? 'show' }}" aria-labelledby="dropdownMenu{{ number }}" style="min-width: 360px;">
+                                    <form action="{{ url_for('home') }}" method="post" class="px-4 py-3">
+                                        <input type="hidden" name="raffle_id" value="{{raffle.id}}" />
+                                        <input type="hidden" name="is_edit" value="{{ item.buyer ? true : false }}" />
+                                        <div class="form-group">
+                                            <label for="raffleNumber">Número(s) Comprado(s)</label>
+                                            <input type="text" name="number" class="form-control" id="raffleNumber" aria-describedby="raffleNumberHelp" placeholder="ex: 1;54;59" value="{{ flash.getFirstMessage('number') ?: item.number }}" {{ item.buyer ? "readonly" : "" }}>
+                                            {% if not item.buyer %}
                                                 <small id="raffleNumberHelp" class="form-text text-muted">Separe-os por ponto e vírgula (;) <span class="badge badge-pill badge-dark" data-toggle="tooltip" data-placement="bottom" title="Por exemplo: 1;12;33;50">?</span></small>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="buyerName">Nome do Comprador</label>
+                                            <input type="text" name="name" class="form-control" id="buyerName" aria-describedby="buyerNameHelp" placeholder="ex: João da Silva" value="{{ item.buyer ? item.buyer.name : (flash.getFirstMessage('name') ?: '') }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="buyerPhone">Número de Telefone</label>
+                                            <input type="text" name="phone" class="form-control" id="buyerPhone" aria-describedby="buyerPhoneHelp" placeholder="ex: (11) 90000-0000" value="{{ item.buyer ? item.buyer.phone|phone : (flash.getFirstMessage('phone') ?: '') }}" data-inputmask="'mask': '(99) 9999[9]-9999'">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="buyerNotes">Observações</label>
+                                            <textarea name="notes" class="form-control" id="buyerNotes" rows="2" placeholder="ex: Vizinho da Dona Maria">{{ item.buyer ? item.buyer.notes : (flash.getFirstMessage('notes') ?: '') }}</textarea>
+                                            <small id="buyerNotesHelp" class="form-text text-muted">Observações que possam ser úteis sobre o comprador.</small>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button type="submit" class="btn btn-primary w-100">Salvar</button>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="buyerName">Nome do Comprador</label>
-                                                <input type="text" name="name" class="form-control" id="buyerName" aria-describedby="buyerNameHelp" placeholder="ex: João da Silva" value="{{ flash.getFirstMessage('name') ?: '' }}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="buyerPhone">Número de Telefone</label>
-                                                <input type="text" name="phone" class="form-control" id="buyerPhone" aria-describedby="buyerPhoneHelp" placeholder="ex: (11) 90000-0000" value="{{ flash.getFirstMessage('phone') ?: '' }}" data-inputmask="'mask': '(99) 9999[9]-9999'">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="buyerNotes">Observações</label>
-                                                <textarea name="notes" class="form-control" id="buyerNotes" rows="2" placeholder="ex: Vizinho da Dona Maria">{{ flash.getFirstMessage('notes') ?: '' }}</textarea>
-                                                <small id="buyerNotesHelp" class="form-text text-muted">Observações que possam ser úteis sobre o comprador.</small>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Salvar</button>
-                                        </form>
-                                    </div>
-                                {% endif %}
+                                            {% if item.buyer %}
+                                                <div class="col">
+                                                    <button type="submit" name="excluir" value="excluir" class="btn btn-danger w-100">Excluir</button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </form>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
