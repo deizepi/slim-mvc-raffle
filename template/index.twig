@@ -9,7 +9,7 @@
             <div class="row align-items-center mb-5">
                 {% for index, item in raffle.numbers %}
                     <div class="col-auto px-1">
-                        <div class="{{ uinfo ? 'raffle-item' : '' }} {{ item.buyer ? 'item-lock' }}">
+                        <div class="raffle-item {{ item.buyer ? 'item-lock' }}">
                             <div class="dropdown">
                                 <div id="dropdownMenu{{ number }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ item.number }}
