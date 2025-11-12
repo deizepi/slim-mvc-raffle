@@ -64,7 +64,7 @@ final class HomeController extends BaseController
                 $buyer = Buyer::where("name", "=", $data['name'])
                     ->where("phone", "=", $data['phone'])
                     ->first();
-                if (!$buyer) {
+                if (!$buyer || $update) { // always create new on edit
                     $buyer = new Buyer($data);
                     $buyer->save();
                 } else {
