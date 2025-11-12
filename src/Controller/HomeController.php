@@ -70,8 +70,11 @@ final class HomeController extends BaseController
                 } else {
                     if ($data['notes'] && $buyer->notes != $data['notes']) {
                         $buyer->notes = $data['notes'];
-                        $buyer->save();
                     }
+                    if ($data['name'] && $buyer->name != $data['name']) {
+                        $buyer->name = $data['name'];
+                    }
+                    $buyer->save();
                 }
 
                 $data['buyer_id'] = $buyer->id;
